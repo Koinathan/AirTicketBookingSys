@@ -98,7 +98,6 @@ public static void main(String[] args) throws Exception {
 								li = fl.listIterator();
 								while(li.hasNext())
 									System.out.println(li.next());
-									System.out.println(fl);
 								System.out.println("-------------------------------------------------------");
 							}else {
 								System.out.println("File do not exist..!");
@@ -108,7 +107,7 @@ public static void main(String[] args) throws Exception {
 							
 						}
 					}
-				
+				 
 				
 				case 39: //admin add flight
 					String Flightnumber,source,airline,destination;
