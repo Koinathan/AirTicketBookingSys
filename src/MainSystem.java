@@ -7,8 +7,7 @@ public static void main(String[] args) throws Exception {
 		
 		//VARIABLES
 		int choice = -1;
-		String userID,name, email;
-		int password;
+		
 		
 		//TXT FILES. 
 		File userFile = new File("User.txt"); //USER TXT
@@ -44,16 +43,16 @@ public static void main(String[] args) throws Exception {
 			switch(choice) { //CREATE USER ACCOUNT
 				case 1: 
 					System.out.print("Enter UserID No: ");
-					userID = s1.next();
+					String userID = s1.nextLine();
 					
 					System.out.print("Enter Name: ");
-					name = s1.next();
+					String name = s1.nextLine();
 					
 					System.out.print("Enter Email address: ");
-					email = s1.next();
+					String email = s1.nextLine();
 					
 					System.out.print("Enter password: ");
-					password = s.nextInt();
+					int password = s.nextInt();
 					
 					al.add(new User(userID,name,email,password));
 					
@@ -94,11 +93,11 @@ public static void main(String[] args) throws Exception {
 								fl = (ArrayList<Flight>)ois.readObject();
 								ois.close();
 								
-								System.out.println("-------------------------------------------------------");
+								System.out.println("-----------------------------------------------------------------------------------------------");
 								li = fl.listIterator();
 								while(li.hasNext())
 									System.out.println(li.next());
-								System.out.println("-------------------------------------------------------");
+								System.out.println("-----------------------------------------------------------------------------------------------");
 							}else {
 								System.out.println("File do not exist..!");
 							}
@@ -109,38 +108,40 @@ public static void main(String[] args) throws Exception {
 					}
 				 
 				
-				case 39: //admin add flight
-					String Flightnumber,source,airline,destination;
-					int departureTime,arrivalTime, availableSeats;
-					double price;
+				case 39: //ADMIN ADD FLIGHT
+					System.out.println("How many flights are there to add?: ");
+					int n = s.nextInt(); 
+					
+					for(int i=0; i<n; i++) {
 					
 					System.out.println("Enter Flightnum No: ");
-					Flightnumber = s.next();
+					String Flightnumber = s1.nextLine();
 					
 					System.out.println("Enter Airlines: ");
-					airline = s.next();
+					String airline = s1.nextLine();
 					
 					System.out.println("Enter source: ");
-					source = s.next();
+					String source = s1.nextLine();
 					
 					System.out.println("Enter destination: ");
-					destination = s.next();
+					String destination = s1.nextLine();
 					
 					System.out.println("Enter departureTime: ");
-					departureTime = s.nextInt();
+					int departureTime = s.nextInt();
 					
 					System.out.println("Enter arrivaltime: ");
-					arrivalTime = s.nextInt();
+					int arrivalTime = s.nextInt();
 					
 					System.out.println("Enter price: ");
-					price = s.nextDouble();
+					double price = s2.nextDouble();
 					
 					System.out.println("Enter availableSeats: ");
-					availableSeats = s.nextInt();
+					int availableSeats = s.nextInt();
 					
-
 					
 					fl.add(new Flight(Flightnumber,airline,source,destination,departureTime,arrivalTime,price,availableSeats));
+					
+					}
 					
 					oos = new ObjectOutputStream(new FileOutputStream(flightFile)); //then only will write collection into file
 					oos.writeObject(fl);

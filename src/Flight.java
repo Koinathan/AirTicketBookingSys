@@ -116,8 +116,8 @@ public class Flight implements Serializable {
 	}
 	
 	public String toString() {
-		return flightNumber + " " + airline + " " + source + " " + destination + " " + departureTime + " " + " " + arrivalTime + " " + price + " " + availableSeats;
-		
+		return flightNumber + "    " + airline + "    " + source + "    " + destination + "    " + departureTime + "    " + "    " + arrivalTime + "    " + price + "    " + availableSeats;
+		 
 	}
 	
 }
