@@ -94,6 +94,7 @@ public static void main(String[] args) throws Exception {
 								ois.close();
 								
 								System.out.println("-----------------------------------------------------------------------------------------------");
+								System.out.println("FLIGHTNO." + "AIRLINES " + "SOURCE " + "DESTINATION " + "DEPARTURE " + "ARRIVAL " + "PRICE " + "AVAIL SEATS " );
 								li = fl.listIterator();
 								while(li.hasNext())
 									System.out.println(li.next());
