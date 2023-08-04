@@ -32,6 +32,11 @@ public static void main(String[] args) throws Exception {
 		
 		
 		do {
+			System.out.println("\n\n===============================");
+			System.out.println("  Air Ticket Booking System");
+			System.out.println("===============================");
+			
+			
 			System.out.println("\n1.CREATE USER ACCOUNT");
 			System.out.println("2.DISPLAY USER");
 			System.out.println("3.USER LOGIN");
@@ -82,12 +87,12 @@ public static void main(String[] args) throws Exception {
 					password = s.nextInt();
 					
 					while(true) {
-						
 						System.out.println("1.View Flights \n2.Book a Flight \n3.Exit");
 						int option = s.nextInt();
 						
 						switch(option) {
-						case 1: //DISPLAY FLIGHTS
+						case 1: //USER DISPLAY FLIGHTS
+							
 							if(flightFile.isFile()) {
 								ois = new ObjectInputStream(new FileInputStream(flightFile));
 								fl = (ArrayList<Flight>)ois.readObject();
@@ -150,8 +155,41 @@ public static void main(String[] args) throws Exception {
 
 					break;
 					
+				case 40://ADMIN DELETE FLIGHT
 					
-				
+					if(flightFile.isFile()) {
+						ois = new ObjectInputStream(new FileInputStream(flightFile));
+						fl = (ArrayList<Flight>)ois.readObject();
+						ois.close();
+						
+						boolean found = false;
+						System.out.println("Please select flight number to Delete: ");
+						String flightNumber = s1.nextLine();
+						System.out.println("-----------------------------------------------------------------------------------------------");
+						li = fl.listIterator();
+						while(li.hasNext()) {
+							Flight f =(Flight)li.next();
+							if(f.flightNumber == flightNumber) {
+							li.remove();
+							found = true;
+							}
+						}
+						if(found) {
+							oos = new ObjectOutputStream(new FileOutputStream(flightFile)); //then only will write collection into file
+							oos.writeObject(fl);
+							oos.close(); //put object into arraylist then persist it in a txt file
+							System.out.println("Record has been deleted successfully ");
+						}
+						else {
+							System.out.println("Record not found....");
+						}
+						
+						System.out.println("-----------------------------------------------------------------------------------------------");
+					}
+					
+					else {
+						System.out.println("Record file does not exist ");
+					}
 									
 				
 				}
