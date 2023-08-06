@@ -12,7 +12,7 @@ public static void main(String[] args) throws Exception {
 		//TXT FILES. 
 		File userFile = new File("User.txt"); //USER TXT
 		File flightFile = new File("Flight.txt"); // FLIGHT TXT
-		File bookingFile = new File("Ticket.txt");// TICKET TXT
+		File ticketFile = new File("Ticket.txt");// TICKET TXT
 		
 		//SCANNERS
 		Scanner s = new Scanner(System.in); //SCAN INTEGER
@@ -30,6 +30,8 @@ public static void main(String[] args) throws Exception {
 		
 		ObjectOutputStream oos2 = null;
 		ObjectInputStream ois2 = null;
+		
+		
 		
 		ListIterator li = null; //print as list orderly.
 		
@@ -103,19 +105,76 @@ public static void main(String[] args) throws Exception {
 								ois.close();
 								
 								System.out.println("-----------------------------------------------------------------------------------------------");
-								System.out.println("FLIGHTNO." + "AIRLINES " + "SOURCE " + "DESTINATION " + "DEPARTURE " + "ARRIVAL " + "PRICE " + "AVAIL SEATS " );
+								System.out.println("FLIGHTNO." + "    "+ "AIRLINES " + "    " + "SOURCE " + "    " + "DESTINATION " + "    "  + "DEPARTURE " + "    " + "ARRIVAL " + "    " + "PRICE " + "    " + "AVAIL SEATS " );
 								li = fl.listIterator();
 								while(li.hasNext())
 									System.out.println(li.next());
 								System.out.println("-----------------------------------------------------------------------------------------------");
 							}else {
-								System.out.println("File do not exist..!");
+								System.out.println("File does not exist..!");
 							}
 							break; //==========================================================================
-						case 2:
 							
+						case 2: //USER FLIGHT BOOKING ALSO DISPLAY FLIGHTS TO SELECT
+							
+							if(flightFile.isFile()) {
+								ois = new ObjectInputStream(new FileInputStream(flightFile));
+								fl = (ArrayList<Flight>)ois.readObject();
+								ois.close();
+								
+								System.out.println("-----------------------------------------------------------------------------------------------");
+								System.out.println("FLIGHTNO." + "    "+ "AIRLINES " + "    " + "SOURCE " + "    " + "DESTINATION " + "    "  + "DEPARTURE " + "    " + "ARRIVAL " + "    " + "PRICE " + "    " + "AVAIL SEATS " );
+								li = fl.listIterator();
+								while(li.hasNext())
+									System.out.println(li.next());
+								System.out.println("-----------------------------------------------------------------------------------------------");
+							}else {
+								System.out.println("File does not exist..!");
+							} // END OF DISPLAYING FLIGHTS FOR USER
+							
+							
+							
+							if(flightFile.isFile()) { //UPDATE CONCEPT UNFINISHED
+								ois = new ObjectInputStream(new FileInputStream(flightFile));
+								fl = (ArrayList<Flight>)ois.readObject();
+								ois.close();
+								
+								boolean found = false;
+								System.out.println("Please select flight number to Book: ");
+								String flightNumber = s1.nextLine();
+								System.out.println("-----------------------------------------------------------------------------------------------");
+								li = fl.listIterator();
+								while(li.hasNext()) {
+									Flight f =(Flight)li.next();
+									if(f.getFlightNumber().equals(flightNumber)) {
+									li.remove();
+									found = true;
+									}
+								}
+								if(found) {
+									oos = new ObjectOutputStream(new FileOutputStream(flightFile)); //then only will write collection into file
+									oos.writeObject(fl);
+									oos.close(); //put object into arraylist then persist it in a txt file
+									System.out.println("Record has been deleted successfully ");
+								}
+								else {
+									System.out.println("Record not found....");
+								}
+								System.out.println("-----------------------------------------------------------------------------------------------");
+							}
+							
+							else {
+								System.out.println("Record file does not exist ");
+							}
+							break;
+							
+							
+								
 						}
+						
+						break;
 					}
+					
 				 
 				
 				case 39: //ADMIN ADD FLIGHT
@@ -195,7 +254,7 @@ public static void main(String[] args) throws Exception {
 					}
 					break;
 					
-				case 41: //UPDATE FLIGHT 
+				case 41: //ADMIN UPDATE FLIGHT 
 					if(flightFile.isFile()) {
 						ois = new ObjectInputStream(new FileInputStream(flightFile));
 						fl = (ArrayList<Flight>)ois.readObject();
