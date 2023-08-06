@@ -16,7 +16,7 @@ import java.io.Serializable;
 
 public class Flight implements Serializable {
 
-	String flightNumber;
+	private String flightNumber;
 	private String airline;
 	private String source;
 	private String destination;

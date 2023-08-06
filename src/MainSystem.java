@@ -15,9 +15,9 @@ public static void main(String[] args) throws Exception {
 		File bookingFile = new File("Ticket.txt");// TICKET TXT
 		
 		//SCANNERS
-		Scanner s = new Scanner(System.in);
-		Scanner s1 = new Scanner(System.in);
-		Scanner s2 = new Scanner(System.in);
+		Scanner s = new Scanner(System.in); //SCAN INTEGER
+		Scanner s1 = new Scanner(System.in); // SCAN STRING
+		Scanner s2 = new Scanner(System.in); // SCAN DOUBLE 
 		
 		//COLLECTIONS
 		ArrayList<User> al = new ArrayList<User>();
@@ -27,6 +27,10 @@ public static void main(String[] args) throws Exception {
 		//OOS/OIS/List Iterator
 		ObjectOutputStream oos = null;
 		ObjectInputStream ois = null;
+		
+		ObjectOutputStream oos2 = null;
+		ObjectInputStream ois2 = null;
+		
 		ListIterator li = null; //print as list orderly.
 		
 		
@@ -155,7 +159,7 @@ public static void main(String[] args) throws Exception {
 
 					break;
 					
-				case 40://ADMIN DELETE FLIGHT
+				case 40://ADMIN DELETE FLIGHTNO.
 					
 					if(flightFile.isFile()) {
 						ois = new ObjectInputStream(new FileInputStream(flightFile));
@@ -169,7 +173,7 @@ public static void main(String[] args) throws Exception {
 						li = fl.listIterator();
 						while(li.hasNext()) {
 							Flight f =(Flight)li.next();
-							if(f.flightNumber == flightNumber) {
+							if(f.getFlightNumber() == flightNumber) {
 							li.remove();
 							found = true;
 							}
@@ -183,7 +187,6 @@ public static void main(String[] args) throws Exception {
 						else {
 							System.out.println("Record not found....");
 						}
-						
 						System.out.println("-----------------------------------------------------------------------------------------------");
 					}
 					
@@ -191,7 +194,6 @@ public static void main(String[] args) throws Exception {
 						System.out.println("Record file does not exist ");
 					}
 									
-				
 				}
 				
 				
@@ -202,9 +204,6 @@ public static void main(String[] args) throws Exception {
 				
 				
 				
-				
-				
-			
 	
 			
 				
