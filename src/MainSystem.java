@@ -173,7 +173,7 @@ public static void main(String[] args) throws Exception {
 						li = fl.listIterator();
 						while(li.hasNext()) {
 							Flight f =(Flight)li.next();
-							if(f.getFlightNumber() == flightNumber) {
+							if(f.getFlightNumber().equals(flightNumber)) {
 							li.remove();
 							found = true;
 							}
@@ -193,6 +193,64 @@ public static void main(String[] args) throws Exception {
 					else {
 						System.out.println("Record file does not exist ");
 					}
+					break;
+					
+				case 41: //UPDATE FLIGHT 
+					if(flightFile.isFile()) {
+						ois = new ObjectInputStream(new FileInputStream(flightFile));
+						fl = (ArrayList<Flight>)ois.readObject();
+						ois.close();
+						
+						boolean found = false;
+						System.out.println("Please select flight number to Update: ");
+						String flightNumber = s1.nextLine();
+						System.out.println("-----------------------------------------------------------------------------------------------");
+						li = fl.listIterator();
+						while(li.hasNext()) {
+							Flight f =(Flight)li.next();
+							if(f.getFlightNumber().equals(flightNumber)) {
+								System.out.println("Enter new Airlines: ");
+								String airline = s1.nextLine();
+								
+								System.out.println("Enter new Source: ");
+								String source = s1.nextLine();
+								
+								System.out.println("Enter new Destination: ");
+								String destination = s1.nextLine();
+								
+								System.out.println("Enter new Departure time: ");
+								int departureTime = s.nextInt();
+								
+								System.out.println("Enter new Arrival time: ");
+								int arrivalTime = s.nextInt();
+								
+								System.out.println("Enter new Ticket price: ");
+								double price = s2.nextDouble();
+								
+								System.out.println("Enter new Seat Availability: ");
+								int availableSeats = s.nextInt();
+								
+								li.set(new Flight (flightNumber,airline,source,destination,departureTime,arrivalTime,price,availableSeats));
+								found = true;
+							}
+						}
+						if(found) {
+							oos = new ObjectOutputStream(new FileOutputStream(flightFile)); //then only will write collection into file
+							oos.writeObject(fl);
+							oos.close(); //put object into arraylist then persist it in a txt file
+							System.out.println("Record has been updated successfully ");
+						}
+						else {
+							System.out.println("Record not found....");
+						}
+						System.out.println("-----------------------------------------------------------------------------------------------");
+					}
+					
+					else {
+						System.out.println("Record file does not exist ");
+					}
+					
+					break;
 									
 				}
 				
