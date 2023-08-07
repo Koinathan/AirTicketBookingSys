@@ -37,7 +37,7 @@ public static void main(String[] args) throws Exception {
 		
 		
 		
-		do {
+		do { //DISPLAY OPTIONS
 			System.out.println("\n\n===============================");
 			System.out.println("  Air Ticket Booking System");
 			System.out.println("===============================");
@@ -46,6 +46,7 @@ public static void main(String[] args) throws Exception {
 			System.out.println("\n1.CREATE USER ACCOUNT");
 			System.out.println("2.DISPLAY USER");
 			System.out.println("3.USER LOGIN");
+			System.out.println("4.FLIGHT ADMINISTRATOR [ADMIN LOGIN REQUIRED]");
 			
 			System.out.println("0.EXIT");
 			System.out.println("Enter your choice: ");
@@ -134,7 +135,7 @@ public static void main(String[] args) throws Exception {
 							
 							
 							
-							if(flightFile.isFile()) { //UPDATE CONCEPT UNFINISHED
+							if(flightFile.isFile()) { //UPDATE AVAILABLE SEATS AFTER BOOKING CONCEPT UNFINISHED
 								ois = new ObjectInputStream(new FileInputStream(flightFile));
 								fl = (ArrayList<Flight>)ois.readObject();
 								ois.close();
@@ -142,12 +143,16 @@ public static void main(String[] args) throws Exception {
 								boolean found = false;
 								System.out.println("Please select flight number to Book: ");
 								String flightNumber = s1.nextLine();
+								
+								System.out.println("Please select the number of seats you would like to book: ");
+								int AvailableSeats = s.nextInt();
+								
 								System.out.println("-----------------------------------------------------------------------------------------------");
 								li = fl.listIterator();
 								while(li.hasNext()) {
 									Flight f =(Flight)li.next();
-									if(f.getFlightNumber().equals(flightNumber)) {
-									li.remove();
+									if(f.getFlightNumber().equals(flightNumber) && f.getAvailableSeats() == AvailableSeats) {
+									f.setAvailableSeats(f.getAvailableSeats() - AvailableSeats);;						
 									found = true;
 									}
 								}
@@ -155,7 +160,7 @@ public static void main(String[] args) throws Exception {
 									oos = new ObjectOutputStream(new FileOutputStream(flightFile)); //then only will write collection into file
 									oos.writeObject(fl);
 									oos.close(); //put object into arraylist then persist it in a txt file
-									System.out.println("Record has been deleted successfully ");
+									System.out.println("Flight Booking Successful! ");
 								}
 								else {
 									System.out.println("Record not found....");
