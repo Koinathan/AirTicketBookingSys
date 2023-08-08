@@ -151,8 +151,8 @@ public static void main(String[] args) throws Exception {
 								li = fl.listIterator();
 								while(li.hasNext()) {
 									Flight f =(Flight)li.next();
-									if(f.getFlightNumber().equals(flightNumber) && f.getAvailableSeats() == AvailableSeats) {
-									f.setAvailableSeats(f.getAvailableSeats() - AvailableSeats);;						
+									if(f.getFlightNumber().equals(flightNumber)) {
+									f.setAvailableSeats(f.getAvailableSeats()- AvailableSeats);						
 									found = true;
 									}
 								}
@@ -180,7 +180,7 @@ public static void main(String[] args) throws Exception {
 						break;
 					}
 					
-				 
+					break;
 				
 				case 39: //ADMIN ADD FLIGHT
 					System.out.println("How many flights are there to add?: ");
