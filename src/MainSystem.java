@@ -106,7 +106,7 @@ public static void main(String[] args) throws Exception {
 								ois.close();
 								
 								System.out.println("-----------------------------------------------------------------------------------------------");
-								System.out.println("FLIGHTNO." + "    "+ "AIRLINES " + "    " + "SOURCE " + "    " + "DESTINATION " + "    "  + "DEPARTURE " + "    " + "ARRIVAL " + "    " + "PRICE " + "    " + "AVAIL SEATS " );
+								System.out.println( "FLIGHTNO." + "    "+ "AIRLINES " + "    " + "SOURCE " + "    " + "DESTINATION " + "    "  + "DEPARTURE " + "    " + "ARRIVAL " + "    " + "PRICE " + "    " + "AVAIL SEATS ");
 								li = fl.listIterator();
 								while(li.hasNext())
 									System.out.println(li.next());
@@ -135,14 +135,14 @@ public static void main(String[] args) throws Exception {
 							
 							
 							
-							if(flightFile.isFile()) { //UPDATE AVAILABLE SEATS AFTER BOOKING CONCEPT UNFINISHED
+							if(flightFile.isFile()) { //UPDATE AVAILABLE SEATS AFTER BOOKING CONCEPT & PRINT TICKET
 								ois = new ObjectInputStream(new FileInputStream(flightFile));
 								fl = (ArrayList<Flight>)ois.readObject();
 								ois.close();
 								
-								boolean found = false;
+								boolean flightfound = false;
 								System.out.println("Please select flight number to Book: ");
-								String flightNumber = s1.nextLine();
+								String selectedflightNumber = s1.nextLine();
 								
 								System.out.println("Please select the number of seats you would like to book: ");
 								int AvailableSeats = s.nextInt();
@@ -151,36 +151,49 @@ public static void main(String[] args) throws Exception {
 								li = fl.listIterator();
 								while(li.hasNext()) {
 									Flight f =(Flight)li.next();
-									if(f.getFlightNumber().equals(flightNumber)) {
+									if(f.getFlightNumber().equals(selectedflightNumber)) {
 									f.setAvailableSeats(f.getAvailableSeats()- AvailableSeats);						
-									found = true;
+									flightfound = true;
 									}
 								}
-								if(found) {
+								if(flightfound) {
 									oos = new ObjectOutputStream(new FileOutputStream(flightFile)); //then only will write collection into file
 									oos.writeObject(fl);
 									oos.close(); //put object into arraylist then persist it in a txt file
+										
+									
+									
 									System.out.println("Flight Booking Successful! ");
 								}
 								else {
 									System.out.println("Record not found....");
 								}
-								System.out.println("-----------------------------------------------------------------------------------------------");
-							}
-							
-							else {
-								System.out.println("Record file does not exist ");
-							}
-							break;
-							
-							
 								
+								// DISPLAY TICKETS
+								if(ticketFile.isFile()) {
+									ois2 = new ObjectInputStream(new FileInputStream(ticketFile));
+									tk = (ArrayList<Ticket>)ois2.readObject();
+									ois2.close();
+									
+									System.out.println("-----------------------------------------------------------------------------------------------");
+									li = tk.listIterator();
+									while(li.hasNext())
+										System.out.println(li.next());
+									System.out.println("-----------------------------------------------------------------------------------------------");
+								}else {
+									System.out.println("File does not exist..!");
+								}
+								break; //==========================================================================
+							}
+							
+							break;
+						
 						}
 						
-						break;
+						
 					}
 					
-					break;
+					
 				
 				case 39: //ADMIN ADD FLIGHT
 					System.out.println("How many flights are there to add?: ");
@@ -310,13 +323,41 @@ public static void main(String[] args) throws Exception {
 						System.out.println("-----------------------------------------------------------------------------------------------");
 					}
 					
-					else {
-						System.out.println("Record file does not exist ");
+					break;
+					
+				case 42: //ADMIN CREATE NEW TICKET
+					
+					System.out.println("Enter the number of tickets you intend to add: ");
+					int t = s.nextInt();
+					
+					for (int i=0;i<t;i++) {
+					System.out.println("Enter a new Ticketno.: ");
+					int ticketNumber = s.nextInt();
+					
+					System.out.println("Enter passenger name: ");
+					String passsenger = s1.nextLine();
+					
+					System.out.println("Enter flight model: ");
+					String flight = s1.nextLine();
+					
+					System.out.println("Enter a new seatNumber: ");
+					String seatNumber = s1.nextLine();
+					
+					System.out.println("Enter a new Ticketno.: ");
+					String status = s1.nextLine();
+					
+					tk.add(new Ticket(ticketNumber,passsenger,flight,seatNumber,status));
+					
 					}
 					
+					oos2 = new ObjectOutputStream(new FileOutputStream(ticketFile)); //then only will write collection into file
+					oos2.writeObject(tk);
+					oos2.close(); //put object into arraylist then persist it in a txt file
+					
 					break;
-									
 				}
+			
+
 				
 				
 				
