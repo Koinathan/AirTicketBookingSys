@@ -14,6 +14,7 @@ public static void main(String[] args) throws Exception {
 		File flightFile = new File("Flight.txt"); // FLIGHT TXT
 		File ticketFile = new File("Ticket.txt");// TICKET TXT
 		File TicketnumFile = new File("Ticketnumber.txt");
+		File AdminFile = new File ("Admin.txt");
 		
 		
 		
@@ -71,7 +72,7 @@ public static void main(String[] args) throws Exception {
 					System.out.print("Enter password: ");
 					int password = s.nextInt();
 					
-					al.add(new User(userID,name,email,password));
+					al.add(new User(userID,name,password));
 					
 					oos = new ObjectOutputStream(new FileOutputStream(userFile)); //then only will write collection into file
 					oos.writeObject(al);
@@ -92,9 +93,9 @@ public static void main(String[] args) throws Exception {
 					System.out.println("-------------------------------------------------------");
 				break;
 			
-				case 3: //USER LOGIN
+				case 3: //***************USER LOGIN**********************************************************************************************************************
 					
-					//Authentication----------------------------------------------------------------------------------------------------------------------------------------------
+					//======Authentication===============================================================================================================================
 					if(userFile.isFile()) {
 					ois= new ObjectInputStream(new FileInputStream(userFile));
 					al = (ArrayList<User>)ois.readObject();
@@ -241,8 +242,13 @@ public static void main(String[] args) throws Exception {
 						
 						}
 						
+							
 						
 					}
+					
+				case 4: //***************ADMINISTRATOR LOGIN**********************************************************************************************************************
+					
+					
 								
 				
 				case 39: //ADMIN ADD FLIGHT

@@ -22,8 +22,17 @@ public class User implements Serializable {
 	
 	
 	
+	
+	User( String name, String email, int password) { //============= Match constuctor to Admin
+		
+		this.name = name;
+		this.email = email;
+		this.password = password;
+	}
+	
+	
 
-	User(String userID, String name, String email, int password) { //============= full constructor
+	User(String userID, String name, int password, String email) { //============= full constructor
 		
 		this.userID = userID;
 		this.name = name;
