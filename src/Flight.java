@@ -26,8 +26,6 @@ public class Flight implements Serializable {
 	private int availableSeats;
 	
 	
-	
-	
 	public Flight() { //================ blank constructor
 		flightNumber = "SQ110011";
 		airline = "Singapore Airline";
@@ -39,7 +37,10 @@ public class Flight implements Serializable {
 		availableSeats = 399;
 		
 	}
-
+	
+	
+	
+	
 	public Flight(String flightNumber, String airline, String source, String destination,int departureTime, int arrivalTime,double price,int availableSeats) { //============= full constructor
 		
 		this.flightNumber = flightNumber;
@@ -120,6 +121,6 @@ public class Flight implements Serializable {
 		return flightNumber + "    " +airline + "     " + source + "    " + destination + "    " + departureTime + "    " + arrivalTime + "    " + price + "    " + availableSeats + "    " ;		 
 	}
 
-	
+
 	
 }

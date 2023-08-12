@@ -13,6 +13,9 @@ public static void main(String[] args) throws Exception {
 		File userFile = new File("User.txt"); //USER TXT
 		File flightFile = new File("Flight.txt"); // FLIGHT TXT
 		File ticketFile = new File("Ticket.txt");// TICKET TXT
+		File TicketnumFile = new File("Ticketnumber.txt");
+		
+		
 		
 		//SCANNERS
 		Scanner s = new Scanner(System.in); //SCAN INTEGER
@@ -23,6 +26,7 @@ public static void main(String[] args) throws Exception {
 		ArrayList<User> al = new ArrayList<User>();
 		ArrayList<Flight> fl = new ArrayList<Flight>();
 		ArrayList<Ticket> tk = new ArrayList<Ticket>();
+		
 		
 		//OOS/OIS/List Iterator
 		ObjectOutputStream oos = null;
@@ -54,12 +58,13 @@ public static void main(String[] args) throws Exception {
 			
 			switch(choice) { //CREATE USER ACCOUNT
 				case 1: 
+					
 					System.out.print("Enter UserID No: ");
 					String userID = s1.nextLine();
 					
 					System.out.print("Enter Name: ");
 					String name = s1.nextLine();
-					
+
 					System.out.print("Enter Email address: ");
 					String email = s1.nextLine();
 					
@@ -75,6 +80,7 @@ public static void main(String[] args) throws Exception {
 					
 				break;
 				case 2: //DISPLAY USERS
+					
 					ois = new ObjectInputStream(new FileInputStream(userFile));
 					al = (ArrayList<User>)ois.readObject();
 					ois.close();
@@ -87,12 +93,51 @@ public static void main(String[] args) throws Exception {
 				break;
 			
 				case 3: //USER LOGIN
+					
+					//Authentication----------------------------------------------------------------------------------------------------------------------------------------------
+					if(userFile.isFile()) {
+					ois= new ObjectInputStream(new FileInputStream(userFile));
+					al = (ArrayList<User>)ois.readObject();
+					ois.close();
+					
+					password = -1;
+					boolean auth = false;
+					int p1=0;
+					String n1 = "";
+					System.out.println("-------------------------------------------------------");
+					
 					System.out.println("Enter your Email address");
-					email = s.next();
+					email = s1.nextLine();
 					
 					System.out.print("Enter your Password: ");
-					password = s.nextInt();
+					 password = s.nextInt();
+					 System.out.println("-------------------------------------------------------");
+					 li= al.listIterator();
+					 
+					 while(auth!=true) {
+						 while(li.hasNext()) {
+							 User e =(User)li.next();
+							 if(e.getEmail()== email) {
+								 p1 = e.getPassword();
+							 }
+							 
+						 } 
+							 if(p1!=password) {
+								 System.out.println("Invalid password, please re-enter password: ");
+								 password = s.nextInt();
+							 }else if(password==0){
+								 System.out.println("Program terminated");
+								 System.exit(0);
+								 
+							 }else {
+								 System.out.println("login successful");
+								 auth = true;
+							 }
+						 }System.out.println(auth);
+						 
+					 }
 					
+					 
 					while(true) {
 						System.out.println("1.View Flights \n2.Book a Flight \n3.Exit");
 						int option = s.nextInt();
@@ -170,10 +215,16 @@ public static void main(String[] args) throws Exception {
 								}
 								
 								// DISPLAY TICKETS
-								if(ticketFile.isFile()) {
-									ois2 = new ObjectInputStream(new FileInputStream(ticketFile));
-									tk = (ArrayList<Ticket>)ois2.readObject();
+								if(TicketnumFile.isFile()) {
+									ois2 = new ObjectInputStream(new FileInputStream(TicketnumFile));
+									tk = (ArrayList<Ticket>)ois.readObject();
 									ois2.close();
+									
+									
+									li = tk.listIterator();
+									
+									Ticket e = tk.get(tk.size() -1);
+									int index = e.getTicketNumber()+1;
 									
 									System.out.println("-----------------------------------------------------------------------------------------------");
 									li = tk.listIterator();
@@ -192,8 +243,7 @@ public static void main(String[] args) throws Exception {
 						
 						
 					}
-					
-					
+								
 				
 				case 39: //ADMIN ADD FLIGHT
 					System.out.println("How many flights are there to add?: ");
@@ -243,7 +293,7 @@ public static void main(String[] args) throws Exception {
 						fl = (ArrayList<Flight>)ois.readObject();
 						ois.close();
 						
-						boolean found = false;
+						boolean found1 = false;
 						System.out.println("Please select flight number to Delete: ");
 						String flightNumber = s1.nextLine();
 						System.out.println("-----------------------------------------------------------------------------------------------");
@@ -252,10 +302,10 @@ public static void main(String[] args) throws Exception {
 							Flight f =(Flight)li.next();
 							if(f.getFlightNumber().equals(flightNumber)) {
 							li.remove();
-							found = true;
+							found1 = true;
 							}
 						}
-						if(found) {
+						if(found1) {
 							oos = new ObjectOutputStream(new FileOutputStream(flightFile)); //then only will write collection into file
 							oos.writeObject(fl);
 							oos.close(); //put object into arraylist then persist it in a txt file
@@ -278,7 +328,7 @@ public static void main(String[] args) throws Exception {
 						fl = (ArrayList<Flight>)ois.readObject();
 						ois.close();
 						
-						boolean found = false;
+						boolean found1 = false;
 						System.out.println("Please select flight number to Update: ");
 						String flightNumber = s1.nextLine();
 						System.out.println("-----------------------------------------------------------------------------------------------");
@@ -308,10 +358,10 @@ public static void main(String[] args) throws Exception {
 								int availableSeats = s.nextInt();
 								
 								li.set(new Flight (flightNumber,airline,source,destination,departureTime,arrivalTime,price,availableSeats));
-								found = true;
+								found1 = true;
 							}
 						}
-						if(found) {
+						if(found1) {
 							oos = new ObjectOutputStream(new FileOutputStream(flightFile)); //then only will write collection into file
 							oos.writeObject(fl);
 							oos.close(); //put object into arraylist then persist it in a txt file
