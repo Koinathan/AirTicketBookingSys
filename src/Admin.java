@@ -4,26 +4,33 @@ public class Admin extends User{
 	private int staffNumber;
 	private int password;
 	
-	
-	public Admin( String name, String email, int password, int staffNumber) {
-		super( name, email, password); // Calling User constructor
-		this.staffNumber=staffNumber;
-	}
-	
 	public Admin() { //Admin empty constructor
 		getName();
 		getEmail();
 		staffNumber = 0;
-		password = 0;
+		password =  0 ;	
+	}
+	
+	public Admin(String name, String email, int staffNumber) {
+		super();
+		this.staffNumber=staffNumber;
 		
 	}
 	
-	public int getStaffNumber() {
-		return staffNumber;
+	public Admin(int password) {
+		this.password=password;
 	}
-
-	public void setStaffNumber(int staffNumber) {
+	
+	public Admin( int staffNumber, int password) {
 		this.staffNumber = staffNumber;
+		this.password = password;
+	}
+	
+
+	public Admin(String name, String email, int password, int staffNumber) {
+		super();
+		this.password=password;
+		this.staffNumber=staffNumber;
 	}
 
 	public int getPassword() {
@@ -33,10 +40,18 @@ public class Admin extends User{
 	public void setPassword(int password) {
 		this.password = password;
 	}
-	
+
+	public int getStaffNumber() {
+		return staffNumber;
+	}
+
+	public void setStaffNumber(int staffNumber) {
+		this.staffNumber = staffNumber;
+	}
+
 	public String toString() {
 		
-		return getName() + " " + getEmail() + " " + staffNumber + " " + password ;
+		return getName() + " " + getEmail() + " " + getPassword() + staffNumber + " ";
 	}
 	
 	
